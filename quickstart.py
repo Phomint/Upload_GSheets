@@ -10,6 +10,7 @@ import glob
 import pandas as pd
 import numpy as np
 import sqlalchemy as sql
+import shutil
 
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/drive',
@@ -61,7 +62,10 @@ def main():
         with open(path, 'r', encoding='utf-8') as query:
             df = pd.read_sql_query(query.read(), db)
         file = path.split('\\')[1][:-4]+'.tsv'
-        df.to_csv(file, sep='\t', index=False)
+        folder_name = 'temp'
+        if not os.path.exists(folder_name):
+            os.makedirs(folder_name)
+        df.to_csv(folder_name+'/'+file, sep='\t', index=False)
 
         has = [item for item in items if item['name']==file]
         if any(has):
@@ -69,24 +73,24 @@ def main():
             update_file(service=service,
                    file_id=has[0]['id'],
                    new_mime_type='application/vnd.google-apps.spreadsheet',
-                   new_filename=has[0]['name'])
+                   new_filename=has[0]['name'],
+                   folder_name=folder_name)
         else:
             print('Enviando: '+file)
             upload_file(service=service,
                         new_mime_type='application/vnd.google-apps.spreadsheet',
-                        new_filename=file)
+                        new_filename=file,
+                        folder_name=folder_name)
+    shutil.rmtree(folder_name)
 
-
-def upload_file(service, new_mime_type, new_filename):
+def upload_file(service, new_mime_type, new_filename, folder_name):
   """Upload a new file's metadata and content.
 
   Args:
     service: Drive API service instance.
-    new_title: New title for the file.
-    new_description: New description for the file.
     new_mime_type: New MIME type for the file.
     new_filename: Filename of the new content to upload.
-    new_revision: Whether or not to create a new revision for this file.
+    folder_name: Folder where is the file
   Returns:
     Updated file metadata if successful, None otherwise.
   """
@@ -94,7 +98,7 @@ def upload_file(service, new_mime_type, new_filename):
     # File's new content.
     file_metadata = {'name': new_filename,
                      'mimeType': new_mime_type}
-    media_body = MediaFileUpload(new_filename,
+    media_body = MediaFileUpload(folder_name+'/'+new_filename,
                                  mimetype='text/csv',
                                  resumable=True)
 
@@ -107,7 +111,7 @@ def upload_file(service, new_mime_type, new_filename):
     print('Ocorreu um erro: %s' % error)
     return None
 
-def update_file(service, file_id, new_mime_type, new_filename):
+def update_file(service, file_id, new_mime_type, new_filename, folder_name):
   """Update an existing file's metadata and content.
 
   Args:
@@ -115,6 +119,7 @@ def update_file(service, file_id, new_mime_type, new_filename):
     file_id: ID of the file to update.
     new_mime_type: New MIME type for the file.
     new_filename: Filename of the new content to upload.
+    folder_name: Folder where is the file
   Returns:
     Updated file metadata if successful, None otherwise.
   """
@@ -127,7 +132,7 @@ def update_file(service, file_id, new_mime_type, new_filename):
 
     # File's new content.
     body = {'appProperties': {'my_key': 'updated_my_value'}}
-    media_body = MediaFileUpload(new_filename,
+    media_body = MediaFileUpload(folder_name+'/'+new_filename,
                                  mimetype=new_mime_type,
                                  resumable=True)
 

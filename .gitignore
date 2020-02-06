@@ -1,0 +1,8 @@
+.ipynb_checkpoints
+*.json
+*.csv
+*.tsv
+*.sql
+*.txt
+*.pickle
+.idea
