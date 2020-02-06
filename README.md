@@ -1,0 +1,2 @@
+# Sistema para atualização de arquivos no Google Drive
+Ao executar o programa ele realizara a atualização ou envio de todos arquivos que estiverem dentro da pasta `Query`, siga as intruções dentro das pastas para configurar as autorizações e formatos corretos para o funcionamento do sistema.
