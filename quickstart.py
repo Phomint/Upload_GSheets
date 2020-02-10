@@ -36,14 +36,16 @@ def main():
             creds = pickle.load(token)
     # If there are no (valid) credentials available, let the user log in.
     if not creds or not creds.valid:
-        print('[Master] Sem credencial ou Inválida')
         if creds and creds.expired and creds.refresh_token:
+            print('[Master] Atualizando credenciais')
             creds.refresh(Request())
         else:
+            print('[Master] Procurando credencial')
             flow = InstalledAppFlow.from_client_secrets_file(
                 'Credentials/client_secret.json', SCOPES)
             creds = flow.run_local_server(port=0)
         # Save the credentials for the next run
+        print('[Master] Criando Token')
         with open('Credentials/token.pickle', 'wb') as token:
             pickle.dump(creds, token)
     print('[Google Drive] Conectando Serviço')

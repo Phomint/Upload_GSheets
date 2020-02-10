@@ -1,0 +1,10 @@
+pandas
+numpy
+pymysql
+gspread
+oauth2client
+google-api-python-client
+httplib2==0.15.0
+google-auth-oauthlib
+
+

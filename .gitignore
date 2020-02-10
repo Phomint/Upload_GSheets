@@ -3,6 +3,6 @@
 *.csv
 *.tsv
 *.sql
-*.txt
+Credentials/credentials.txt
 *.pickle
 .idea
