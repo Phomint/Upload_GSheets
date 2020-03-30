@@ -54,7 +54,7 @@ def main():
     # Call the Drive v3 API
     print('[Google Drive] Procurando Arquivos')
     results = service.files().list(
-        pageSize=10, fields="nextPageToken, files(id, name)").execute()
+        fields="nextPageToken, files(id, name)").execute()
     items = results.get('files', [])
 
     if not items:
