@@ -6,3 +6,4 @@
 Credentials/credentials.txt
 *.pickle
 .idea
+log.tsv
