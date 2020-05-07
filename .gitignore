@@ -1,10 +1,10 @@
 .ipynb_checkpoints
-*.json
 *.csv
 *.tsv
 *.sql
 Credentials/credentials.txt
 Credentials/credentials.bak
+Credentials/client_secret.json
 FrontEnd/node_modules
 *.pickle
 .idea
