@@ -4,6 +4,8 @@
 *.tsv
 *.sql
 Credentials/credentials.txt
+Credentials/credentials.bak
+FrontEnd/node_modules
 *.pickle
 .idea
 log.tsv

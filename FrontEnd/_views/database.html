@@ -1,0 +1,61 @@
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../_linkers/connection.js" charset="utf-8"></script>
+</head>
+
+<body>
+    <br>
+    <div class="container">
+        <button class="btn btn-info"><a style="color:white" href="../index.html">Voltar</a> </button>
+        <br>
+        <h3>Configurações Banco de dados MySQL | MariaDB</h3>
+        <div class="row">
+            <div class="col-sm-8">
+                <label for="inputHost">Host:</label>
+                <input type="text" class="form-control" id="inputHost" aria-describedby="host" value="localhost" placeholder="Host">
+            </div>
+            <div class="col-sm-4">
+                <label for="inputPort">Porta:</label>
+                <input type="text" class="form-control" id="inputPort" aria-describedby="porta" value="3306" placeholder="Porta">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-8">
+                <label for="inputUser">Usuário:</label>
+                <input type="text" class="form-control" id="inputUser" aria-describedby="usuário" placeholder="Usuário">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-8">
+                <label for="inputPassword">Senha:</label>
+                <input type="password" class="form-control" id="inputPassword" aria-describedby="senha" placeholder="Senha">
+            </div>
+            <div class="col-sm-4">
+                <label for="checkSave">Salvar:</label>
+                <select class="form-control" id="checkSave">
+                    <option>Sempre</option>
+                    <option>Na sessão</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <label for="inputDatabase">Base de Dados:</label>
+                <input type="text" class="form-control" id="inputDatabase" aria-describedby="banco de dados" placeholder="Base de Dados">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <label for="showURL">URL:</label>
+                <input type="text" class="form-control" id="showURL" aria-describedby="URL">
+            </div>
+            <div id="test"></div>
+        </div>
+
+        <button class="btn btn-success" onclick="saveBase()">OK</button>
+        <button class="btn btn-success" onclick="loadBase()">LOAD</button>
+
+    </div>
+<body>
