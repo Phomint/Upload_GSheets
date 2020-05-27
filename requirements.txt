@@ -5,6 +5,6 @@ gspread
 oauth2client
 SQLAlchemy
 google-api-python-client
-httplib2==0.15.0
+httplib2==0.18.0
 google-auth-oauthlib
 
