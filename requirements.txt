@@ -1,10 +1,6 @@
 pandas
-numpy
-pymysql
-gspread
-oauth2client
-SQLAlchemy
 google-api-python-client
-httplib2==0.18.0
 google-auth-oauthlib
+sqlalchemy
+pymysql
 
