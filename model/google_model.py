@@ -67,7 +67,7 @@ class GoogleDrive():
         self.file = file
         print('[Google Drive] Procurando arquivo')
         self.has = [item for item in self.items if item['name'] == file]
-        print('[Google Drive]'+('Arquivo encontrado' if any(self.has) else 'Nenhum arquivo encontrado'))
+        print('[Google Drive]'+(' Arquivo encontrado' if any(self.has) else ' Nenhum arquivo encontrado'))
 
     def upload_file(self, new_mime_type='application/vnd.google-apps.spreadsheet', folder_name='temp'):
         '''Upload a new file's metadata and content.
@@ -82,7 +82,9 @@ class GoogleDrive():
         '''
         try:
             file_metadata = {'name': self.file,
-                         'mimeType': new_mime_type}
+                             'parents': [self.folder_id],
+                             'mimeType': new_mime_type}
+
             media_body = MediaFileUpload(folder_name+'/'+self.file,
                                          mimetype='text/csv',
                                          resumable=True)

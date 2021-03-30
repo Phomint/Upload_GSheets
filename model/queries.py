@@ -2,6 +2,7 @@ import pandas as pd
 import os.path
 import shutil
 
+
 class Query():
     def __init__(self, query_path):
         '''
