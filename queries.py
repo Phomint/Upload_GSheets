@@ -31,13 +31,13 @@ class Query():
         print('[MySQL | MariaDB] (Executando) query ' + self.query_path.split('\\')[1])
         self.dataframe = pd.read_sql_query(query, con)
 
-    def to_gdrive(self, extension='.tsv'):
+    def to_gdrive(self, sep='\t', extension='.tsv'):
         self.file = self.query_path.split('\\')[1][:-4] + extension
         print('[Master] Criando arquivo temporário')
         if not os.path.exists(self.folder_temp):
             os.makedirs(self.folder_temp)
         print('[Master] (Criando) ' + self.folder_temp + '/' + self.file)
-        self.dataframe.to_csv(self.folder_temp + '/' + self.file, sep='\t', index=False)
+        self.dataframe.to_csv(self.folder_temp + '/' + self.file, sep=sep, index=False)
 
     def remove_temp(self):
         print('[Master] Excluindo diretório temporário')

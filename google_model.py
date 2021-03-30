@@ -9,18 +9,26 @@ from google.auth.transport.requests import Request
 
 class GoogleDrive():
     def __init__(self):
-        self.scopes = ['https://www.googleapis.com/auth/drive',
-                  'https://www.googleapis.com/auth/drive.file',
-                  'https://www.googleapis.com/auth/drive.appdata',
-                  'https://www.googleapis.com/auth/drive.scripts',
-                  'https://www.googleapis.com/auth/drive.apps.readonly',
-                  'https://www.googleapis.com/auth/drive.metadata']
-
+        self.scopes = ['https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/drive.metadata']
         self.creds = None
         self.service = None
         self.items = None
         self.has = None
+        self.file = None
+        self.folder_id = None
 
+    def create_folder(self, name):
+        self.check_items(name)
+        if not any(self.has):
+            file_metadata = {
+                 'name': name,
+                 'mimeType': 'application/vnd.google-apps.folder'
+            }
+            file = self.service.files().create(body=file_metadata,
+                                                 fields='id').execute()
+            self.folder_id = file.get('id')
+        else:
+            self.folder_id = self.has[0]['id']
 
     def get_token(self, token_path='Credentials/token.pickle', secret_path='Credentials/client_secret.json'):
         if os.path.exists(token_path):
@@ -56,10 +64,12 @@ class GoogleDrive():
             print('[Google Drive] Nenhum arquivo encontrado!')
 
     def check_items(self, file):
+        self.file = file
         print('[Google Drive] Procurando arquivo')
         self.has = [item for item in self.items if item['name'] == file]
+        print('[Google Drive]'+('Arquivo encontrado' if any(self.has) else 'Nenhum arquivo encontrado'))
 
-    def upload_file(self, new_filename='untitled', new_mime_type='application/vnd.google-apps.spreadsheet', folder_name='temp'):
+    def upload_file(self, new_mime_type='application/vnd.google-apps.spreadsheet', folder_name='temp'):
         '''Upload a new file's metadata and content.
 
         Args:
@@ -71,9 +81,9 @@ class GoogleDrive():
             Updated file metadata if successful, None otherwise.
         '''
         try:
-            file_metadata = {'name': new_filename,
+            file_metadata = {'name': self.file,
                          'mimeType': new_mime_type}
-            media_body = MediaFileUpload(folder_name+'/'+new_filename,
+            media_body = MediaFileUpload(folder_name+'/'+self.file,
                                          mimetype='text/csv',
                                          resumable=True)
 
